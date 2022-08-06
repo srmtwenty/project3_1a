@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Product from '../../models/Product';
 import { apiGetAllProducts } from '../../remote/e-commerce-api/productService';
 import Navbar from '../navbar/Narbar';
+import ProductDetail from '../product-detail/ProductDetail';
 import { ProductCard } from "./ProductCard";
 
 const Container = styled.div`
@@ -81,6 +82,7 @@ export const DisplayProducts = () => {
         {products.map((item) => (
             <ProductCard product={item} key={item.id} />
         ))}
+        
         </Container>
     </React.Fragment>
     

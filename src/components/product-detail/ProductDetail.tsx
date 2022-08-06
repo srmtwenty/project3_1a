@@ -70,25 +70,22 @@ const ProductDetail = (props: Props) => {
         setLoading(false);
       };    
       
-/*
-      const addItemToCart = () => {
-        const readyProduct=product;
+
+      const addItemToCart = (props: Props) => {
+        const readyProduct=product.payload;
         const newCart = [...cart]
+        
         const index = newCart.findIndex((searchProduct) => {
+          console.log("SearchProduct: ",searchProduct)
           return searchProduct.id === readyProduct.id;
         })
   
         if (index === -1) newCart.push(readyProduct)
         else newCart[index].quantity += readyProduct.quantity
-  
+        
         setCart(newCart)
-      }
-*/
-      
-      const addToCart=()=>{
-        //e.preventDefault();
         console.log("Added to cart!")
-        //addItemToCart({product, quantity: 1})
+        //console.log(product.id)
       }
       
       
@@ -119,7 +116,7 @@ if (loading) {
               <option value="3">3</option>
             </select>
         
-            <Button style={button} as="a" variant="primary">Add To Cart</Button>
+            <Button onClick={() => {addItemToCart({...product.payload, quantity: 1})}} style={button} as="a" variant="primary">Add To Cart</Button>
             
           
           </div>
