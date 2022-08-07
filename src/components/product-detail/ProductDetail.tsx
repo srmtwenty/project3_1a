@@ -50,6 +50,19 @@ const ProductDetail = (props: Props) => {
     margin: "20px 0px 0px 0px"
   }
   
+    let [count, setCount]=useState(0);
+    if(count<1){
+      count=1;
+    };
+
+    const incrementCount=()=>{
+      setCount(count+1);
+    };
+
+    const decrementCount=()=>{
+      setCount(count-1);
+    };
+
     const [product, setProduct] = React.useState<any>({});
     const [loading, setLoading] = React.useState<boolean>(true);
  
@@ -62,6 +75,7 @@ const ProductDetail = (props: Props) => {
 
       useEffect(() => {
         getProduct();
+        
       },[])
 
       const getProduct = async() =>{
@@ -81,11 +95,26 @@ const ProductDetail = (props: Props) => {
         })
   
         if (index === -1) newCart.push(readyProduct)
-        else newCart[index].quantity += readyProduct.quantity
         
+          //setCart(newCart)
+          //newCart[index].quantity= count;
+          //setCart(newCart)
+        //console.log("Added to cart for the first time!")
+        //console.log("First Count: ", count)
+        
+        //else newCart[index].quantity += readyProduct.quantity
+        else 
+        //newCart[index].quantity=0;
+        
+        newCart[index].quantity -= count;
         setCart(newCart)
         console.log("Added to cart!")
-        //console.log(product.id)
+        
+        console.log("Count: ", count)
+        if(newCart[index].quantity<=0){
+          newCart[index].quantity=0;
+          console.log("Out of Stock!");
+        }
       }
       
       
@@ -110,13 +139,13 @@ if (loading) {
           <p>Quantity: {product.payload.quantity}</p>
           <div>
             <span>Qty</span>
-            <select>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
+            <div className="app">
+            <button className=""  onClick={incrementCount}>+</button>
+            {count}
+            <button className="" onClick={decrementCount}>-</button>
+          </div>
         
-            <Button onClick={() => {addItemToCart({...product.payload, quantity: 1})}} style={button} as="a" variant="primary">Add To Cart</Button>
+            <Button onClick={() => {addItemToCart({...product.payload, quantity: count})}} style={button} as="a" variant="primary">Add To Cart</Button>
             
           
           </div>
