@@ -84,7 +84,7 @@ import Product from "../../models/Product";
 
       if (index === -1) newCart.push(product)
       else newCart[index].quantity += product.quantity
-
+      
       setCart(newCart)
     }
 

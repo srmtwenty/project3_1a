@@ -50,6 +50,7 @@ const ProductDetail = (props: Props) => {
     margin: "20px 0px 0px 0px"
   }
   
+  
     let [count, setCount]=useState(0);
     if(count<1){
       count=1;
@@ -75,7 +76,7 @@ const ProductDetail = (props: Props) => {
 
       useEffect(() => {
         getProduct();
-        
+
       },[])
 
       const getProduct = async() =>{
@@ -88,14 +89,32 @@ const ProductDetail = (props: Props) => {
       const addItemToCart = (props: Props) => {
         const readyProduct=product.payload;
         const newCart = [...cart]
-        
+        //let tempQuantity=readyProduct.quantity;
+
         const index = newCart.findIndex((searchProduct) => {
           console.log("SearchProduct: ",searchProduct)
           return searchProduct.id === readyProduct.id;
         })
   
-        if (index === -1) newCart.push(readyProduct)
-        
+        if (index === -1) {
+          //newCart.push(readyProduct)
+
+          //before
+          readyProduct.quantity=count;
+          
+          //after
+          //readyProduct.quantity=readyProduct.quantity-count;
+          
+
+          //readyProduct.quantity=0;
+
+
+          newCart.push(readyProduct)
+
+          //tempQuantity-=count;
+          //readyProduct.quantity=tempQuantity;
+
+          
           //setCart(newCart)
           //newCart[index].quantity= count;
           //setCart(newCart)
@@ -103,18 +122,25 @@ const ProductDetail = (props: Props) => {
         //console.log("First Count: ", count)
         
         //else newCart[index].quantity += readyProduct.quantity
-        else 
-        //newCart[index].quantity=0;
+        }
+        else
         
-        newCart[index].quantity -= count;
+        
+        newCart[index].quantity += count;
         setCart(newCart)
         console.log("Added to cart!")
         
         console.log("Count: ", count)
-        if(newCart[index].quantity<=0){
-          newCart[index].quantity=0;
-          console.log("Out of Stock!");
-        }
+        //
+        
+            if(newCart[index].quantity<=0){
+              newCart[index].quantity=0;
+              console.log("Out of Stock!");
+            }
+          
+        
+        
+
       }
       
       
@@ -131,6 +157,7 @@ if (loading) {
       <>
       <div style={detail}>
         <img style={image} src={product.payload.image} />
+        
         
         <div style={content}>
           <div>Product Detail</div>
